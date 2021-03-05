@@ -8,4 +8,4 @@ target/
 Cargo.lock
 
 # Remove .exercism/ folder
-./exercism/
+exercism/
