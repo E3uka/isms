@@ -1,3 +1,4 @@
+use chrono::{Duration, NaiveTime};
 use std::fmt;
 
 const MIN_PER_DAY: i32 = 24 * 60;
@@ -43,5 +44,36 @@ impl fmt::Display for Clock {
             self.cyclic_mins / MIN_PER_HOUR,
             self.cyclic_mins % MIN_PER_HOUR,
         )
+    }
+}
+
+// Alternate method using chrono package.
+#[derive(Debug, Eq, PartialEq)]
+pub struct AlternateClock {
+    time: NaiveTime,
+    _secret: (),
+}
+
+impl AlternateClock {
+    pub fn new(hours: i32, minutes: i32) -> Self {
+        AlternateClock {
+            time: NaiveTime::from_hms(0, 0, 0)
+                + Duration::hours(hours as i64)
+                + Duration::minutes(minutes as i64),
+            _secret: (),
+        }
+    }
+
+    pub fn add_minutes(&self, minutes: i32) -> Self {
+        AlternateClock {
+            time: self.time + Duration::minutes(minutes as i64),
+            _secret: (),
+        }
+    }
+}
+
+impl fmt::Display for AlternateClock {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.time.format("%H:%M").to_string())
     }
 }
