@@ -3,9 +3,16 @@ use std::fmt;
 const MIN_PER_DAY: i32 = 24 * 60;
 const MIN_PER_HOUR: i32 = 60;
 
+// _secret field is zero sized type this prevent illegal initiliasation & compiles away entirely
+// during compiler optimisations, prevents errors like below:
+//
+// Clock { hours: -24, minutes: -1440 } // hours and minutes should wrap
+//
+// ref: https://steveklabnik.com/writing/structure-literals-vs-constructors-in-rust
 #[derive(Debug, Eq, PartialEq)]
 pub struct Clock {
     cyclic_mins: i32,
+    _secret: (),
 }
 
 impl Clock {
@@ -14,6 +21,7 @@ impl Clock {
             cyclic_mins: Clock::format_time(
                 MIN_PER_DAY + Clock::format_time(MIN_PER_HOUR * hours + minutes),
             ),
+            _secret: (),
         }
     }
 
