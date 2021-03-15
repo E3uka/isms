@@ -8,9 +8,12 @@
 // with this knowledge we can find out what number in a list of matching numbers does not have
 // a pair.
 fn check_list_parity(list: &[isize]) -> isize {
-    let mut zero = 0;
-    list.iter().for_each(|num| zero ^= num);
-    zero
+    // let mut zero = 0;
+    // list.iter().for_each(|num| zero ^= num);
+    // zero
+
+    // more concise
+    list.iter().fold(0, |a, b| a ^ b)
 }
 
 #[cfg(test)]
