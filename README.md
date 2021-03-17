@@ -1,3 +1,3 @@
 # isms
 
-daily (wishful thinking) code excercises🤘🏾
+~~daily~~ code excercises and musings on peices of code🤘🏾
